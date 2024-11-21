@@ -1,0 +1,286 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(255, 255, 255);
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+}
+
+.redes {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
+.logomedia {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.carrito {
+    position: fixed;
+    top: -120px;
+    right: 10px;
+    padding: 10px 20px;
+}
+
+.carrito a {
+    text-decoration: none;
+}
+
+.imagencarrito {
+    width: 150px;
+    height: auto;
+}
+
+.logo {
+    text-align: center;
+    padding: 20px;
+}
+
+ul {
+    padding: 0%;
+    margin: 0%;
+    display: block;
+    list-style: none;
+    text-decoration: none;
+}
+
+ul li {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 15px;
+}
+
+ul li a {
+    text-decoration: none;
+    border: none;
+}
+
+.banner {
+    margin-top: 20px;
+}
+
+section {
+    padding: 10px;
+    margin: 5px;
+    display: inline-block;
+}
+
+h1 {
+    padding: 5px;
+    margin: 5px;
+    margin-top: 20px;
+}
+
+footer {
+    text-align: left;
+    width: min-content;
+}
+
+h3, h4 {
+    padding: 10px;
+    margin: 5px;
+    width: 1px;
+}
+
+.categorias {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap; /* Permite que las categorías se ajusten */
+}
+
+.imagenbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    flex: 1 1 200px; /* Asegura que las imágenes se adapten */
+}
+
+.imagenbox img {
+    width: 280px;
+    height: auto;
+}
+
+.imagenbox p {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.Formulario {
+    background-color: #fff;
+    padding: 30px;
+    max-width: 500px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    color: #f17eda;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background-color: #8f68d5;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #ee75ee;
+}
+
+.politicas {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+h2 {
+    color: #a4849f;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
+p {
+    color: #252525;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Estilos del contenedor principal */
+.nosotros {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+}
+
+/* Título principal */
+h1 {
+    text-align: center;
+    color: #393939;
+    margin-bottom: 20px;
+}
+
+/* Estilos de párrafos */
+p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+/* Contenedor de la galería */
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 90%;
+    max-width: 600px;
+}
+
+/* Estilos de cada producto */
+.fotos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Imagen del producto */
+.item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Botón "Agregar al carrito" */
+.item button {
+    padding: 10px 15px;
+    background-color: #f26cdc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 2px;
+}
+
+/* Efecto de hover en el botón */
+.item button:hover {
+    background-color: #a04591;
+}
+
+/* Media Queries para hacerlo responsivo */
+
+/* Para tablets y pantallas medianas */
+@media (max-width: 1024px) {
+    .categorias {
+        flex-direction: column;
+        align-items: center;
+    }
+    .redes {
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+    }
+    .carrito {
+        top: 20px;
+        right: 20px;
+    }
+    .imagenbox {
+        margin-right: 0;
+    }
+}
+
+/* Para móviles */
+@media (max-width: 600px) {
+    .carrito {
+        top: 10px;
+        right: 10px;
+    }
+    .imagenbox img {
+        width: 100%;
+    }
+    .productos-destacados img {
+        max-width: 100%;
+    }
+    footer {
+        text-align: center;
+    }
+    .galeria {
+        grid-template-columns: 1fr;
+    }
+}
