@@ -3,12 +3,6 @@
     padding: 0;
 }
 
-.productos-destacados {
-    .productos-destacados img {
-    width: 100%;
-    max-width: 200px; 
-    margin: 10px;
-        
 body {
     background-color: rgb(255, 255, 255);
     font-family: "Raleway", sans-serif;
@@ -249,7 +243,7 @@ p {
     background-color: #a04591;
 }
 
-/* Responsive */
+/* Media Queries para hacerlo responsivo */
 
 /* Para tablets y pantallas medianas */
 @media (max-width: 1024px) {
@@ -281,7 +275,7 @@ p {
         width: 100%;
     }
     .productos-destacados img {
-        max-width: 140px;
+        max-width: 100%;
     }
     footer {
         text-align: center;
