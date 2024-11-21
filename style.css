@@ -272,10 +272,11 @@ p {
         right: 10px;
     }
     .imagenbox img {
-        width: 100%;
+        width: 100%; 
+        max-width: 150px; 
     }
     .productos-destacados img {
-        max-width: 100%;
+        max-width: 150px; 
     }
     footer {
         text-align: center;
