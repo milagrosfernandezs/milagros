@@ -275,7 +275,7 @@ p {
         width: 100%;
     }
     .productos-destacados img {
-        max-width: 150px;
+        max-width: 10px;
     }
     footer {
         text-align: center;
