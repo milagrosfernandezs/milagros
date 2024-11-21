@@ -3,6 +3,12 @@
     padding: 0;
 }
 
+.productos-destacados {
+    .productos-destacados img {
+    width: 100%;
+    max-width: 200px; 
+    margin: 10px;
+        
 body {
     background-color: rgb(255, 255, 255);
     font-family: "Raleway", sans-serif;
