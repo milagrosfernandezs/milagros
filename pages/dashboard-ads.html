@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Gestión de Ads Meta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2em;
+        }
+
+        .status-badge {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .status-conectado {
+            background: #10b981;
+        }
+
+        .status-desconectado {
+            background: #ef4444;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .metric-unit {
+            font-size: 0.4em;
+            color: #666;
+            margin-left: 5px;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .campaigns-section {
+            margin-top: 30px;
+        }
+
+        .campaigns-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .campaign-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .campaign-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .campaign-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .campaign-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1em;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .chart-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table tr:hover {
+            background: #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Dashboard - Cute Baires Ads</h1>
+            <div class="status-badge status-desconectado" id="statusBadge">
+                Falta Configuración
+            </div>
+        </header>
+
+        <!-- Alertas -->
+        <div id="alertContainer"></div>
+
+        <!-- Métricas principales -->
+        <div class="grid">
+            <div class="card">
+                <h3>Presupuesto Total Gastado</h3>
+                <div class="metric">$<span id="totalSpend">0</span><span class="metric-unit">USD</span></div>
+            </div>
+            <div class="card">
+                <h3>Total de Conversiones</h3>
+                <div class="metric"><span id="totalConversions">0</span><span class="metric-unit">vtas</span></div>
+            </div>
+            <div class="card">
+                <h3>ROAS Promedio</h3>
+                <div class="metric"><span id="averageRoas">0</span><span class="metric-unit">x</span></div>
+            </div>
+        </div>
+
+        <!-- Acciones disponibles -->
+        <div class="actions">
+            <button class="btn-primary" onclick="showCreateCampaignModal()">
+                ➕ Crear Nueva Campaña
+            </button>
+            <button class="btn-success" onclick="runOptimization()">
+                ⚡ Optimizar Ahora
+            </button>
+            <button class="btn-warning" onclick="loadReport()">
+                📈 Cargar Reporte
+            </button>
+        </div>
+
+        <!-- Sección de Campañas -->
+        <div class="campaigns-section">
+            <h2>Campañas Activas</h2>
+            <div id="campaignsList" class="campaign-list">
+                <p style="color: #666; text-align: center; padding: 20px;">
+                    Aún no hay campañas. Crea una nueva para comenzar.
+                </p>
+            </div>
+        </div>
+
+        <!-- Tabla de métricas -->
+        <div class="chart-container">
+            <h2>Resumen de Rendimiento</h2>
+            <table class="table" id="metricsTable">
+                <thead>
+                    <tr>
+                        <th>Campaña</th>
+                        <th>Impresiones</th>
+                        <th>Clics</th>
+                        <th>Conversiones</th>
+                        <th>Gasto</th>
+                        <th>CPC</th>
+                        <th>ROAS</th>
+                    </tr>
+                </thead>
+                <tbody id="metricsTableBody">
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: #999;">
+                            No hay datos disponibles
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal para crear campaña -->
+    <div class="modal" id="createCampaignModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Crear Nueva Campaña</h2>
+                <button class="close-btn" onclick="closeModal('createCampaignModal')">✕</button>
+            </div>
+            <form onsubmit="createCampaign(event)">
+                <div class="form-group">
+                    <label for="campaignName">Nombre de la Campaña</label>
+                    <input type="text" id="campaignName" required placeholder="Ej: Buzos Verano 2024">
+                </div>
+                <div class="form-group">
+                    <label for="campaignBudget">Presupuesto Diario ($USD)</label>
+                    <input type="number" id="campaignBudget" value="50" min="10" step="5" required>
+                </div>
+                <div class="form-group">
+                    <label for="campaignObjective">Objetivo</label>
+                    <select id="campaignObjective">
+                        <option value="CONVERSIONS">Conversiones (Ventas)</option>
+                        <option value="LINK_CLICKS">Clics en enlace</option>
+                        <option value="REACH">Alcance</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">
+                    Crear Campaña
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de configuración -->
+    <div class="modal" id="setupModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⚙️ Configuración Requerida</h2>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <p style="color: #666; margin-bottom: 15px;">
+                    Para usar el gestor de ads automático, necesitas:
+                </p>
+                <ol style="color: #666; margin-left: 20px; line-height: 1.8;">
+                    <li>Crear un archivo <code>.env</code> en la raíz del proyecto</li>
+                    <li>Agregar tus credenciales de Meta Ads</li>
+                    <li>Instalar las dependencias: <code>npm install</code></li>
+                    <li>Ejecutar el servidor: <code>npm start</code></li>
+                </ol>
+            </div>
+            <div style="background: #f3f4f6; padding: 15px; border-radius: 5px; margin-bottom: 15px; font-family: monospace; font-size: 0.85em;">
+                <p>Contenido del .env:</p>
+                <pre style="color: #333;">META_ACCESS_TOKEN=your_token
+META_AD_ACCOUNT_ID=act_xxxxx
+META_BUSINESS_ACCOUNT_ID=xxxxx</pre>
+            </div>
+            <button class="btn-primary" onclick="closeModal('setupModal')" style="width: 100%;">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let campaigns = [];
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            checkStatus();
+            // Actualizar cada 5 minutos
+            setInterval(loadReport, 300000);
+        });
+
+        async function checkStatus() {
+            try {
+                const response = await fetch('/status');
+                const data = await response.json();
+
+                const badge = document.getElementById('statusBadge');
+                if (data.status === 'conectado') {
+                    badge.className = 'status-badge status-conectado';
+                    badge.textContent = '✅ Conectado';
+                    loadReport();
+                } else {
+                    badge.className = 'status-badge status-desconectado';
+                    badge.textContent = '⚠️ Falta Configuración';
+                    document.getElementById('setupModal').classList.add('active');
+                }
+            } catch (error) {
+                showAlert('Error al conectar con el servidor', 'error');
+            }
+        }
+
+        function showCreateCampaignModal() {
+            document.getElementById('createCampaignModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        async function createCampaign(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('campaignName').value;
+            const budget = parseFloat(document.getElementById('campaignBudget').value);
+
+            try {
+                const response = await fetch('/campaign/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, dailyBudget: budget }),
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showAlert(data.message, 'success');
+                    closeModal('createCampaignModal');
+                    document.getElementById('campaignName').value = '';
+                    loadReport();
+                } else {
+                    showAlert(data.error, 'error');
+                }
+            } catch (error) {
+                showAlert('Error creando campaña: ' + error.message, 'error');
+            }
+        }
+
+        async function runOptimization() {
+            try {
+                const response = await fetch('/optimize', { method: 'POST' });
+                const data = await response.json();
+                showAlert(data.message + ` (${data.campaignsOptimized} campañas)`, 'success');
+                setTimeout(loadReport, 2000);
+            } catch (error) {
+                showAlert('Error en optimización', 'error');
+            }
+        }
+
+        async function loadReport() {
+            try {
+                const response = await fetch('/report');
+                const report = await response.json();
+
+                // Actualizar métricas
+                document.getElementById('totalSpend').textContent =
+                    report.summary.totalSpend.toFixed(2);
+                document.getElementById('totalConversions').textContent =
+                    report.summary.totalConversions;
+                document.getElementById('averageRoas').textContent =
+                    report.summary.averageRoas;
+
+                // Actualizar tabla
+                const tbody = document.getElementById('metricsTableBody');
+                tbody.innerHTML = '';
+
+                for (const [campaignId, metrics] of Object.entries(report.campaigns)) {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${campaignId}</td>
+                            <td>${metrics.impressions || 0}</td>
+                            <td>${metrics.clicks || 0}</td>
+                            <td>${metrics.conversions || 0}</td>
+                            <td>$${metrics.spend.toFixed(2)}</td>
+                            <td>$${metrics.cpc.toFixed(2)}</td>
+                            <td>${metrics.roas.toFixed(2)}x</td>
+                        </tr>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error cargando reporte:', error);
+            }
+        }
+
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            alertContainer.appendChild(alertDiv);
+
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        // Cerrar modal al hacer click fuera
+        window.onclick = function(event) {
+            const modal = event.target;
+            if (modal.classList && modal.classList.contains('modal')) {
+                modal.classList.remove('active');
+            }
+        };
+    </script>
+</body>
+</html>
