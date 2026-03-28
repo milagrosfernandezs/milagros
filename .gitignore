@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+package-lock.json
+npm-debug.log
+
+# Credenciales (NUNCA commitear)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Caché
+.cache/
