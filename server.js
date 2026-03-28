@@ -8,7 +8,10 @@ const express = require('express');
 const MetaAdsManager = require('./meta-ads-manager');
 
 const app = express();
+const path = require('path');
+
 app.use(express.json());
+app.use(express.static(path.join(__dirname)));
 
 // Inicializar Manager de Ads
 const adsManager = new MetaAdsManager(
