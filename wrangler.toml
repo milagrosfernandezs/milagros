@@ -1,0 +1,23 @@
+name = "cute-studio-egresados"
+compatibility_date = "2024-09-23"
+
+# Cloudflare Pages: la carpeta de salida del build de Vite
+pages_build_output_dir = "dist"
+
+# ─── D1 — Base de datos SQLite en la nube ─────────────────────────────────────
+# Pasos para crear la base de datos:
+#   1. wrangler d1 create cute-studio-egresados
+#   2. Copiá el database_id que te devuelve y reemplazá el valor de abajo
+#   3. wrangler d1 execute cute-studio-egresados --remote --file=schema.sql
+[[d1_databases]]
+binding     = "DB"
+database_name = "cute-studio-egresados"
+database_id   = "REEMPLAZAR_CON_TU_DATABASE_ID"
+
+# ─── R2 — Almacenamiento de imágenes ──────────────────────────────────────────
+# Pasos para crear el bucket:
+#   1. wrangler r2 bucket create cute-studio-designs
+# (No hay que reemplazar nada más aquí)
+[[r2_buckets]]
+binding     = "DESIGNS"
+bucket_name = "cute-studio-designs"
