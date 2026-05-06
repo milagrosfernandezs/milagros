@@ -15,6 +15,24 @@
     <!-- Enlace al archivo de estilos CSS -->
     <link rel="stylesheet" href="../style.css">
 
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'TU_PIXEL_ID');
+    fbq('track', 'PageView');
+    fbq('track', 'ViewContent', { content_type: 'product', content_category: 'Buzos Personalizados' });
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=TU_PIXEL_ID&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
 </head>
 
 <body>
@@ -62,19 +80,19 @@
             <div class="galeria">
                 <div class="fotos">
                     <img src="../img/chicassuper.png" alt="Buzos Chicas">
-                    <button>Agregar al carrito</button>
+                    <button class="btn-carrito" data-product="Buzo Chicas Superpoderosas" data-id="chicassuper">Agregar al carrito</button>
                 </div>
                 <div class="fotos">
                     <img src="../img/dinoo.png" alt="Buzo Dino">
-                    <button>Agregar al carrito</button>
+                    <button class="btn-carrito" data-product="Buzo Dinosaurio" data-id="dinoo">Agregar al carrito</button>
                 </div>
                 <div class="fotos">
                     <img src="../img/chimu.png" alt="Buzos Chimuelos">
-                    <button>Agregar al carrito</button>
+                    <button class="btn-carrito" data-product="Buzo Chimuelos" data-id="chimu">Agregar al carrito</button>
                 </div>
                 <div class="fotos">
                     <img src="../img/stickers.png" alt="Buzo Cupido">
-                    <button>Agregar al carrito</button>
+                    <button class="btn-carrito" data-product="Buzo Cupido" data-id="stickers">Agregar al carrito</button>
                 </div>
             </div>
 
@@ -117,6 +135,17 @@
         <h4>teléfono: 113654548</h4>
     </footer>
 
+    <script>
+    document.querySelectorAll('.btn-carrito').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            fbq('track', 'AddToCart', {
+                content_name: this.dataset.product,
+                content_ids: [this.dataset.id],
+                content_type: 'product'
+            });
+        });
+    });
+    </script>
 </body>
 
 </html>
